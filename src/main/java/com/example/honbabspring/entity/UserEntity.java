@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserEntity extends BaseTimeEntity {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,9 +21,9 @@ public class UserEntity extends BaseTimeEntity {
     private String email;
 
     @Column(nullable = false)
-    private String phoneNumber;
+    private String phone;
 
     @Enumerated(EnumType.STRING)
-    private RoleType role;
+    private Role role;
 
 }
