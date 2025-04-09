@@ -1,5 +1,6 @@
 package com.example.honbabspring.entity;
 
+import com.example.honbabspring.type.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,20 +8,21 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "user")
 public class UserEntity extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    private String userId;
+
     private String username;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    private String confirmPassword;
+
     private String email;
 
-    @Column(nullable = false)
     private String phone;
 
     @Enumerated(EnumType.STRING)

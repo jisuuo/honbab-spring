@@ -1,8 +1,9 @@
 package com.example.honbabspring.service;
 
-import com.example.honbabspring.DTO.JoinDTO;
-import com.example.honbabspring.entity.Role;
+import com.example.honbabspring.dto.JoinDTO;
+import com.example.honbabspring.type.Role;
 import com.example.honbabspring.entity.UserEntity;
+import com.example.honbabspring.exception.DuplicateException;
 import com.example.honbabspring.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class JoinService {
 
 
     public void join(JoinDTO joinDTO) {
-
+        String userId = joinDTO.getUserId();
         String username = joinDTO.getUsername();
         String password = joinDTO.getPassword();
         String email = joinDTO.getEmail();
@@ -28,13 +29,18 @@ public class JoinService {
 
         Role role = Role.valueOf(roleString.toUpperCase());
 
-        Boolean isExist = userRepository.existsByUsername(username);
+        boolean isExistUserId = userRepository.existsByUserId(userId);
+        if (isExistUserId) {
+            throw new DuplicateException("userId", "이미 사용 중인 아이디입니다: " + userId);
+        }
 
-        if (isExist) {
-            return;
+        boolean isExistUserEmail = userRepository.existsByEmail(email);
+        if (isExistUserEmail) {
+            throw new DuplicateException("email", "이미 사용 중인 이메일입니다: " + email);
         }
 
         UserEntity newUser = new UserEntity();
+        newUser.setUserId(userId);
         newUser.setUsername(username);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
         newUser.setEmail(email);
