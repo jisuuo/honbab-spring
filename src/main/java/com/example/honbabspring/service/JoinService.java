@@ -39,13 +39,14 @@ public class JoinService {
             throw new DuplicateException("email", "이미 사용 중인 이메일입니다: " + email);
         }
 
-        UserEntity newUser = new UserEntity();
-        newUser.setUserId(userId);
-        newUser.setUsername(username);
-        newUser.setPassword(bCryptPasswordEncoder.encode(password));
-        newUser.setEmail(email);
-        newUser.setPhone(phone);
-        newUser.setRole(role);
+        UserEntity newUser = UserEntity.builder()
+                .userId(userId)
+                .username(username)
+                .password(bCryptPasswordEncoder.encode(password))
+                .email(email)
+                .phone(phone)
+                .role(role)
+                .build();
 
         userRepository.save(newUser);
     }

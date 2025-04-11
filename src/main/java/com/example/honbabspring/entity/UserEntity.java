@@ -2,13 +2,14 @@ package com.example.honbabspring.entity;
 
 import com.example.honbabspring.type.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
-@Table(name = "user")
+@Builder(toBuilder = true)
+@AllArgsConstructor
 public class UserEntity extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,4 +29,13 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public UserEntity() {
+
+    }
+
+    public UserEntity(String username, String password, Role role) {
+        this.userId = username;
+        this.password = password;
+        this.role = role;
+    }
 }

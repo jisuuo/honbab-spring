@@ -1,5 +1,8 @@
 package com.example.honbabspring.exception;
 
+import lombok.Getter;
+
+@Getter
 public class DuplicateException extends RuntimeException {
     private final String field;
 
@@ -8,7 +11,4 @@ public class DuplicateException extends RuntimeException {
         this.field = field;
     }
 
-    public String getField() {
-        return field;
-    }
 }
