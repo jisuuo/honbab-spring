@@ -1,12 +1,14 @@
 package com.example.honbabspring.dto;
 
+import com.example.honbabspring.entity.UserEntity;
+import com.example.honbabspring.type.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class JoinDTO {
+public class JoinRequestDto {
 
     @NotEmpty(message = "아이디 입력은 필수입니다.")
     @Pattern(regexp = "[a-zA-Z0-9]{2,9}", message = "아이디는 영문, 숫자만 가능하며 2 ~ 10자리까지 가능합니다.")
@@ -33,7 +35,7 @@ public class JoinDTO {
 
     private final String role;
 
-    public JoinDTO(String userId, String username, String password, String confirmPassword, String phone, String email, String role) {
+    public JoinRequestDto(String userId, String username, String password, String confirmPassword, String phone, String email, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -41,5 +43,16 @@ public class JoinDTO {
         this.phone = phone;
         this.email = email;
         this.role = role;
+    }
+
+    public UserEntity toEntity(String encodedPassword) {
+        return UserEntity.builder()
+                .userId(this.userId)
+                .username(username)
+                .email(this.email)
+                .password(encodedPassword)
+                .phone(this.phone)
+                .role(Role.valueOf(role))
+                .build();
     }
 }

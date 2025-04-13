@@ -1,12 +1,10 @@
 package com.example.honbabspring.controller;
 
-import com.example.honbabspring.dto.JoinDTO;
+import com.example.honbabspring.dto.JoinRequestDto;
 import com.example.honbabspring.service.JoinService;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
@@ -21,7 +19,7 @@ public class JoinController {
     }
 
     @PostMapping("/join")
-    public String join(@Valid JoinDTO joinDTO, BindingResult bindingResult) {
+    public String join(@Valid JoinRequestDto joinDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(); // 첫 번째 에러 메시지 반환
         }

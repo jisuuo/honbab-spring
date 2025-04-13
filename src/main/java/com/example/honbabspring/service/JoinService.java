@@ -1,6 +1,6 @@
 package com.example.honbabspring.service;
 
-import com.example.honbabspring.dto.JoinDTO;
+import com.example.honbabspring.dto.JoinRequestDto;
 import com.example.honbabspring.type.Role;
 import com.example.honbabspring.entity.UserEntity;
 import com.example.honbabspring.exception.DuplicateException;
@@ -19,7 +19,7 @@ public class JoinService {
     }
 
 
-    public void join(JoinDTO joinDTO) {
+    public void join(JoinRequestDto joinDTO) {
         String userId = joinDTO.getUserId();
         String username = joinDTO.getUsername();
         String password = joinDTO.getPassword();

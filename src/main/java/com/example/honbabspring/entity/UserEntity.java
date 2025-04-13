@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor
+@Table(name = "user")
 public class UserEntity extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
