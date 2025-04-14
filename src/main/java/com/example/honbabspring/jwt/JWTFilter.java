@@ -1,7 +1,7 @@
 package com.example.honbabspring.jwt;
 
 import com.example.honbabspring.dto.CustomUserDetails;
-import com.example.honbabspring.entity.UserEntity;
+import com.example.honbabspring.entity.User;
 import com.example.honbabspring.type.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -42,7 +42,7 @@ public class JWTFilter extends OncePerRequestFilter {
         String username = jwtUtil.getUsername(token);
         String role = jwtUtil.getRole(token);
 
-        UserEntity userEntity = new UserEntity(username, "temp", Role.valueOf(role));
+        User userEntity = new User(username, "temp", Role.valueOf(role));
 
         CustomUserDetails customUserDetails = new CustomUserDetails(userEntity);
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());

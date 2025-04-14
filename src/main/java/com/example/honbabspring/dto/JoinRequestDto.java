@@ -1,6 +1,6 @@
 package com.example.honbabspring.dto;
 
-import com.example.honbabspring.entity.UserEntity;
+import com.example.honbabspring.entity.User;
 import com.example.honbabspring.type.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -45,8 +45,8 @@ public class JoinRequestDto {
         this.role = role;
     }
 
-    public UserEntity toEntity(String encodedPassword) {
-        return UserEntity.builder()
+    public User toEntity(String encodedPassword) {
+        return User.builder()
                 .userId(this.userId)
                 .username(username)
                 .email(this.email)

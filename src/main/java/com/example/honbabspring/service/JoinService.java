@@ -2,18 +2,18 @@ package com.example.honbabspring.service;
 
 import com.example.honbabspring.dto.JoinRequestDto;
 import com.example.honbabspring.type.Role;
-import com.example.honbabspring.entity.UserEntity;
+import com.example.honbabspring.entity.User;
 import com.example.honbabspring.exception.DuplicateException;
-import com.example.honbabspring.repository.UserRepository;
+import com.example.honbabspring.repository.AuthRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JoinService {
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public JoinService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public JoinService(AuthRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -39,7 +39,7 @@ public class JoinService {
             throw new DuplicateException("email", "이미 사용 중인 이메일입니다: " + email);
         }
 
-        UserEntity newUser = UserEntity.builder()
+        User newUser = User.builder()
                 .userId(userId)
                 .username(username)
                 .password(bCryptPasswordEncoder.encode(password))

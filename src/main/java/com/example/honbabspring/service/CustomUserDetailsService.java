@@ -1,8 +1,8 @@
 package com.example.honbabspring.service;
 
 import com.example.honbabspring.dto.CustomUserDetails;
-import com.example.honbabspring.entity.UserEntity;
-import com.example.honbabspring.repository.UserRepository;
+import com.example.honbabspring.entity.User;
+import com.example.honbabspring.repository.AuthRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
 
-    public CustomUserDetailsService(UserRepository userRepository) {
+    public CustomUserDetailsService(AuthRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        UserEntity userData = userRepository.findByUserId(userId);
+        User userData = userRepository.findByUserId(userId);
 
         if(userData != null) {
             return new CustomUserDetails(userData);

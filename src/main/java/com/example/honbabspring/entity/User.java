@@ -11,7 +11,7 @@ import lombok.Getter;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @Table(name = "user")
-public class UserEntity extends BaseTimeEntity {
+public class User extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -30,11 +30,11 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public UserEntity() {
+    public User() {
 
     }
 
-    public UserEntity(String username, String password, Role role) {
+    public User(String username, String password, Role role) {
         this.userId = username;
         this.password = password;
         this.role = role;

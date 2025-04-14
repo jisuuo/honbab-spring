@@ -1,6 +1,6 @@
 package com.example.honbabspring.dto;
 
-import com.example.honbabspring.entity.UserEntity;
+import com.example.honbabspring.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ public class UserResponseDto {
     private String userId;
     private String email;
 
-    public static UserResponseDto of(UserEntity user) {
+    public static UserResponseDto of(User user) {
         return UserResponseDto.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())

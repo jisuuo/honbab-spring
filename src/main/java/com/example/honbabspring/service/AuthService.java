@@ -1,15 +1,14 @@
 package com.example.honbabspring.service;
 
 import com.example.honbabspring.dto.*;
-import com.example.honbabspring.entity.UserEntity;
+import com.example.honbabspring.entity.User;
 import com.example.honbabspring.jwt.TokenProvider;
-import com.example.honbabspring.repository.UserRepository;
+import com.example.honbabspring.repository.AuthRepository;
 import com.example.honbabspring.service.redis.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,7 @@ public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final TokenProvider tokenProvider;
 
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
     private final RefreshTokenService refreshTokenService;
 
     String refreshToken;
@@ -34,7 +33,7 @@ public class AuthService {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
 
-        UserEntity user = joinRequestDto.toEntity(passwordEncoder.encode(joinRequestDto.getPassword()));
+        User user = joinRequestDto.toEntity(passwordEncoder.encode(joinRequestDto.getPassword()));
         return UserResponseDto.of(userRepository.save(user));
     }
 
