@@ -1,4 +1,4 @@
-package com.example.honbabspring.controller;
+package com.example.honbabspring.Article.api;
 
 import com.example.honbabspring.dto.ArticleResponseDto;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class ArticleAPITest {
 
     @Test
     void readTest() {
-        ArticleResponseDto response = read(172171776810893312L);
+        ArticleResponseDto response = read(172177386824990720L);
         System.out.println("response = " + response);
     }
 
