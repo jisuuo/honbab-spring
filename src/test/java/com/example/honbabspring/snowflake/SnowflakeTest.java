@@ -1,4 +1,4 @@
-package com.example.snowflake;
+package com.example.honbabspring.snowflake;
 
 
 import java.util.ArrayList;
