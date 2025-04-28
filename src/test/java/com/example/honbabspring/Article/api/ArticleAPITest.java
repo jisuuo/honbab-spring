@@ -5,7 +5,10 @@ import com.example.honbabspring.dto.ArticleResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.RestClient;
+
+import java.util.List;
 
 public class ArticleAPITest {
     RestClient restClient = RestClient.create("http://localhost:8080");
@@ -70,6 +73,32 @@ public class ArticleAPITest {
                 .body(ArticlePageResponseDto.class);
 
         System.out.println("response.getArticleCount = " + response.getArticleCount());
+    }
+
+    @Test
+    void readAllInfiniteScrollTest() {
+        List<ArticleResponseDto> articles1 = restClient.get()
+                .uri("/v1/articles/infinite-scroll?boardId=1&pageSize=5")
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<ArticleResponseDto>>() {
+                });
+
+        System.out.println("firstPage");
+        for (ArticleResponseDto article : articles1) {
+            System.out.println("article.getArticleId() = " + article.getArticleId());
+        }
+
+        Long lastArticleId = articles1.get(articles1.size() - 1).getArticleId();
+        List<ArticleResponseDto> articles2 = restClient.get()
+                .uri("/v1/articles/infinite-scroll?boardId=1&pageSize=5&lastArticleId=%s".formatted(lastArticleId))
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<ArticleResponseDto>>() {
+                });
+        System.out.println("secondPage");
+        for (ArticleResponseDto article : articles2) {
+            System.out.println("article.getArticleId() = " + article.getArticleId());
+        }
+
     }
 
 
