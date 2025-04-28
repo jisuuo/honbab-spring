@@ -1,5 +1,6 @@
 package com.example.honbabspring.Article.api;
 
+import com.example.honbabspring.dto.ArticlePageResponseDto;
 import com.example.honbabspring.dto.ArticleResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,6 +60,16 @@ public class ArticleAPITest {
                 .uri("/v1/articles/{articleId}", 172171776810893312L)
                 .retrieve()
                 .body(ArticleResponseDto.class);
+    }
+
+    @Test
+    void readAllTest() {
+        ArticlePageResponseDto response = restClient.get()
+                .uri("/v1/articles?boardId=1&pageSize=30&page=1")
+                .retrieve()
+                .body(ArticlePageResponseDto.class);
+
+        System.out.println("response.getArticleCount = " + response.getArticleCount());
     }
 
 

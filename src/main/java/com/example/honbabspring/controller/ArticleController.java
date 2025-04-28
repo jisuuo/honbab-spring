@@ -1,6 +1,7 @@
 package com.example.honbabspring.controller;
 
 import com.example.honbabspring.dto.ArticleCreateRequestDto;
+import com.example.honbabspring.dto.ArticlePageResponseDto;
 import com.example.honbabspring.dto.ArticleResponseDto;
 import com.example.honbabspring.dto.ArticleUpdateRequestDto;
 import com.example.honbabspring.service.ArticleService;
@@ -16,6 +17,15 @@ public class ArticleController {
     @GetMapping("/{articleId}")
      public ArticleResponseDto read(@PathVariable Long articleId) {
         return articleService.read(articleId);
+    }
+
+    @GetMapping("/v1/articles")
+    public ArticlePageResponseDto readAll(@RequestParam("boardId") Long boardId,
+                                          @RequestParam("page") Long page,
+                                          @RequestParam("pageSize") Long pageSize) {
+
+        return articleService.readAll(boardId, page, pageSize);
+
     }
 
     @PostMapping

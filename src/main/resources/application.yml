@@ -16,8 +16,8 @@ spring:
     password: root
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
+
     hibernate:
-      ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategySnakeCaseImpl
+      ddl-auto: none
 

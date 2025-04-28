@@ -2,6 +2,7 @@ package com.example.honbabspring.service;
 
 import com.example.honbabspring.common.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
 import com.example.honbabspring.dto.ArticleCreateRequestDto;
+import com.example.honbabspring.dto.ArticlePageResponseDto;
 import com.example.honbabspring.dto.ArticleResponseDto;
 import com.example.honbabspring.dto.ArticleUpdateRequestDto;
 import com.example.honbabspring.entity.Article;
@@ -40,5 +41,12 @@ public class ArticleService {
     public void delete(Long articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow();
         articleRepository.delete(article);
+    }
+
+    public ArticlePageResponseDto readAll(Long boardId, Long page, Long pageSize) {
+        return ArticlePageResponseDto.of(
+                articleRepository.findAll(boardId, (page - 1) * pageSize, pageSize).stream().map(ArticleResponseDto::from).toList(),
+                articleRepository.count(boardId, PageLimitCalculator.calculatePageLimit(page, pageSize, 10L))
+        );
     }
 }
