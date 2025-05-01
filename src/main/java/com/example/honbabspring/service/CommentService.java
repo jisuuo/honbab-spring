@@ -2,12 +2,15 @@ package com.example.honbabspring.service;
 
 import com.example.honbabspring.common.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
 import com.example.honbabspring.dto.CommentCreateRequest;
+import com.example.honbabspring.dto.CommentPageResponse;
 import com.example.honbabspring.dto.CommentResponse;
 import com.example.honbabspring.entity.Comment;
 import com.example.honbabspring.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.util.function.Predicate.not;
 
@@ -73,5 +76,24 @@ public class CommentService {
                     .filter(not(this::hasChildren))
                     .ifPresent(this::delete);
         }
+    }
+
+    public CommentPageResponse readAll(Long articleId, Long page, Long pageSize) {
+        return CommentPageResponse.of(
+                commentRepository.findAll(articleId, (page - 1) * pageSize, pageSize).stream()
+                        .map(CommentResponse::from)
+                        .toList(),
+                commentRepository.count(articleId, PageLimitCalculator.calculatePageLimit(page, pageSize, 10L))
+        );
+    }
+
+    public List<CommentResponse> readAll(Long articleId, Long lastParentCommentId, Long lastCommentId, Long limit) {
+        List<Comment> comments = lastParentCommentId == null || lastCommentId == null ?
+                commentRepository.findAllInfiniteScroll(articleId, limit) :
+                commentRepository.findAllInfiniteScroll(articleId, lastParentCommentId, lastCommentId, limit);
+
+        return comments.stream()
+                .map(CommentResponse::from)
+                .toList();
     }
 }
