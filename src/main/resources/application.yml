@@ -19,5 +19,5 @@ spring:
 
     hibernate:
       physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategySnakeCaseImpl
-      ddl-auto: update
+      ddl-auto: none
 
