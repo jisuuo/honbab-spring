@@ -15,7 +15,7 @@ public class CommentResponse {
     private Long parentCommentId;
     private Long articleId;
     private Long writerId;
-    private Boolean deleted;
+    private boolean deleted;
     private LocalDateTime createdAt;
 
     public static CommentResponse from(Comment comment) {
