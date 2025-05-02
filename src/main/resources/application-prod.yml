@@ -1,0 +1,5 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  # todo 운영 데이터 베이스 연결

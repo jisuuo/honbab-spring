@@ -1,10 +1,11 @@
 server:
-  port: 8080
+  port: 8081
   servlet:
-    context-path: /
+    context-path: /dev
 spring:
-  profiles:
-    default: dev # 기본 환경을 dev로
+  config:
+    activate:
+      on-profile: dev
   data:
     redis:
       host: localhost
