@@ -28,7 +28,7 @@ public class AuthService {
     String refreshToken;
 
     @Transactional
-    public UserResponseDto signup(JoinRequestDto joinRequestDto) {
+    public UserResponseDto signup(SignRequestDto joinRequestDto) {
         if (userRepository.existsByUserId(joinRequestDto.getUserId())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }

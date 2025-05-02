@@ -20,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@Valid JoinRequestDto joinRequestDto, BindingResult bindingResult) {
+    public ResponseEntity<UserResponseDto> signup(@Valid SignRequestDto joinRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessage = Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage();
             return ResponseEntity.badRequest().body(new UserResponseDto(null, errorMessage));

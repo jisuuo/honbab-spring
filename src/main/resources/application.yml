@@ -10,6 +10,9 @@ spring:
       host: localhost
       port: 6379
       password: "1111"
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jwt:
     secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
     token-validity-time: 3600000
