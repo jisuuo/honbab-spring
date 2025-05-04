@@ -1,6 +1,6 @@
 package com.example.honbabspring.auth.service;
 
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import com.example.honbabspring.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

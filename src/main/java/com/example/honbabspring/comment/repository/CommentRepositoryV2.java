@@ -1,6 +1,6 @@
 package com.example.honbabspring.comment.repository;
 
-import com.example.honbabspring.entity.CommentV2;
+import com.example.honbabspring.comment.entity.CommentV2;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

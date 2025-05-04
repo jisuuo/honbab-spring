@@ -1,6 +1,6 @@
 package com.example.honbabspring.auth.model;
 
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

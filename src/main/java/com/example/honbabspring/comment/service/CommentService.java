@@ -4,7 +4,7 @@ import com.example.honbabspring.common.snowflake.src.main.java.kuke.board.common
 import com.example.honbabspring.comment.dto.CommentCreateRequest;
 import com.example.honbabspring.comment.dto.CommentPageResponseDto;
 import com.example.honbabspring.comment.dto.CommentResponseDto;
-import com.example.honbabspring.entity.Comment;
+import com.example.honbabspring.comment.entity.Comment;
 import com.example.honbabspring.comment.repository.CommentRepository;
 import com.example.honbabspring.common.util.PageLimitCalculator;
 import lombok.RequiredArgsConstructor;

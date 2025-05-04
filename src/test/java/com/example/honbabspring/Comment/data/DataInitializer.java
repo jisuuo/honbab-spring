@@ -1,7 +1,7 @@
 package com.example.honbabspring.Comment.data;
 
 import com.example.honbabspring.common.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
-import com.example.honbabspring.entity.Comment;
+import com.example.honbabspring.comment.entity.Comment;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package com.example.honbabspring.article.repository;
 
-import com.example.honbabspring.entity.Article;
+import com.example.honbabspring.article.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

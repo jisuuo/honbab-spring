@@ -1,7 +1,7 @@
 package com.example.honbabspring.auth.jwt;
 
 import com.example.honbabspring.auth.model.CustomUserDetails;
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import com.example.honbabspring.user.type.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.example.honbabspring.entity;
+package com.example.honbabspring.comment.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;

@@ -1,7 +1,7 @@
 package com.example.honbabspring.repository;
 
 import com.example.honbabspring.article.repository.ArticleRepository;
-import com.example.honbabspring.entity.Article;
+import com.example.honbabspring.article.entity.Article;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

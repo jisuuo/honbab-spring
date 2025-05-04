@@ -1,4 +1,4 @@
-package com.example.honbabspring.entity;
+package com.example.honbabspring.common.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseTimeEntity {
+public abstract class BaseTime {
 
     @CreatedDate
     private LocalDateTime createdAt;

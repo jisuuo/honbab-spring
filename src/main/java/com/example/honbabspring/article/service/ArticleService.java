@@ -5,7 +5,7 @@ import com.example.honbabspring.article.dto.ArticleCreateRequestDto;
 import com.example.honbabspring.article.dto.ArticlePageResponseDto;
 import com.example.honbabspring.article.dto.ArticleResponseDto;
 import com.example.honbabspring.article.dto.ArticleUpdateRequestDto;
-import com.example.honbabspring.entity.Article;
+import com.example.honbabspring.article.entity.Article;
 import com.example.honbabspring.article.repository.ArticleRepository;
 import com.example.honbabspring.common.util.PageLimitCalculator;
 import lombok.RequiredArgsConstructor;

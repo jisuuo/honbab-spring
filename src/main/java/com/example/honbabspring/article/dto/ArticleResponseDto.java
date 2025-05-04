@@ -1,6 +1,6 @@
 package com.example.honbabspring.article.dto;
 
-import com.example.honbabspring.entity.Article;
+import com.example.honbabspring.article.entity.Article;
 import lombok.Getter;
 import lombok.ToString;
 

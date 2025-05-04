@@ -1,6 +1,6 @@
 package com.example.honbabspring.user.repository;
 
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

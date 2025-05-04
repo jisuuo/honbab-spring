@@ -1,6 +1,6 @@
 package com.example.honbabspring.Comment.Service;
 
-import com.example.honbabspring.entity.Comment;
+import com.example.honbabspring.comment.entity.Comment;
 import com.example.honbabspring.comment.repository.CommentRepository;
 import com.example.honbabspring.comment.service.CommentService;
 import org.junit.jupiter.api.DisplayName;

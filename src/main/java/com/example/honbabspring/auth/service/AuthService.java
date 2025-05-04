@@ -1,7 +1,7 @@
 package com.example.honbabspring.auth.service;
 
 import com.example.honbabspring.auth.dto.*;
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import com.example.honbabspring.auth.jwt.TokenProvider;
 import com.example.honbabspring.auth.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;

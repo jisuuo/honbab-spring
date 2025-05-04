@@ -1,4 +1,4 @@
-package com.example.honbabspring.entity;
+package com.example.honbabspring.article.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

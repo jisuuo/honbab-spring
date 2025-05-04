@@ -1,6 +1,6 @@
 package com.example.honbabspring.auth.dto;
 
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import com.example.honbabspring.user.type.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;

@@ -1,7 +1,7 @@
 package com.example.honbabspring.auth.service;
 
 import com.example.honbabspring.auth.model.CustomUserDetails;
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import com.example.honbabspring.auth.repository.AuthRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

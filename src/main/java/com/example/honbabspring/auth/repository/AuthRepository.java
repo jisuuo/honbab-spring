@@ -1,6 +1,6 @@
 package com.example.honbabspring.auth.repository;
 
-import com.example.honbabspring.entity.User;
+import com.example.honbabspring.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
