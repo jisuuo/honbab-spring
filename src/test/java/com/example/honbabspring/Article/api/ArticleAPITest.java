@@ -1,7 +1,7 @@
 package com.example.honbabspring.Article.api;
 
-import com.example.honbabspring.dto.ArticlePageResponseDto;
-import com.example.honbabspring.dto.ArticleResponseDto;
+import com.example.honbabspring.article.dto.ArticlePageResponseDto;
+import com.example.honbabspring.article.dto.ArticleResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;

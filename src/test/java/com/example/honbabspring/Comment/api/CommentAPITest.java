@@ -1,7 +1,7 @@
 package com.example.honbabspring.Comment.api;
 
-import com.example.honbabspring.dto.CommentPageResponse;
-import com.example.honbabspring.dto.CommentResponse;
+import com.example.honbabspring.comment.dto.CommentPageResponseDto;
+import com.example.honbabspring.comment.dto.CommentResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
@@ -15,9 +15,9 @@ public class CommentAPITest {
 
     @Test
     void create() {
-        CommentResponse response1 = createComment(new CommentCreateRequest(1L, "my comment1", null, 1L));
-        CommentResponse response2 = createComment(new CommentCreateRequest(1L, "my comment2", response1.getCommentId(), 1L));
-        CommentResponse response3 = createComment(new CommentCreateRequest(1L, "my comment3", response1.getCommentId(), 1L));
+        CommentResponseDto response1 = createComment(new CommentCreateRequest(1L, "my comment1", null, 1L));
+        CommentResponseDto response2 = createComment(new CommentCreateRequest(1L, "my comment2", response1.getCommentId(), 1L));
+        CommentResponseDto response3 = createComment(new CommentCreateRequest(1L, "my comment3", response1.getCommentId(), 1L));
 
         System.out.println("commentId=%s".formatted(response1.getCommentId()));
         System.out.println("\tcommentId=%s".formatted(response2.getCommentId()));
@@ -25,20 +25,20 @@ public class CommentAPITest {
 
     }
 
-    CommentResponse createComment(CommentCreateRequest request) {
+    CommentResponseDto createComment(CommentCreateRequest request) {
         return restClient.post()
                 .uri("/v1/comments")
                 .body(request)
                 .retrieve()
-                .body(CommentResponse.class);
+                .body(CommentResponseDto.class);
     }
 
     @Test
     void read() {
-        CommentResponse response = restClient.get()
+        CommentResponseDto response = restClient.get()
                 .uri("/v1/comments/{commentId}", 176219899366682624L)
                 .retrieve()
-                .body(CommentResponse.class);
+                .body(CommentResponseDto.class);
 
         System.out.println("response = " + response);
     }
@@ -58,13 +58,13 @@ public class CommentAPITest {
 
     @Test
     void readAll() {
-        CommentPageResponse response = restClient.get()
+        CommentPageResponseDto response = restClient.get()
                 .uri("/v1/comments?articleId=1&page=1&pageSize=10")
                 .retrieve()
-                .body(CommentPageResponse.class);
+                .body(CommentPageResponseDto.class);
 
         System.out.println("response.getCommentCount() = " + response.getCommentCount());
-        for (CommentResponse comment : response.getComments()) {
+        for (CommentResponseDto comment : response.getComments()) {
             if (!comment.getCommentId().equals(comment.getParentCommentId())) {
                 System.out.print("\t");
             }
@@ -89,33 +89,33 @@ public class CommentAPITest {
 
     @Test
     void readAllInfiniteScroll() {
-        List<CommentResponse> responses1 = restClient.get()
+        List<CommentResponseDto> responses1 = restClient.get()
                 .uri("/v1/comments/infinite-scroll?articleId=1&pageSize=5")
                 .retrieve()
-                .body(new ParameterizedTypeReference<List<CommentResponse>>() {
+                .body(new ParameterizedTypeReference<List<CommentResponseDto>>() {
                 });
 
         System.out.println("firstPage");
-        for (CommentResponse comment : responses1) {
+        for (CommentResponseDto comment : responses1) {
             if (!comment.getCommentId().equals(comment.getParentCommentId())) {
                 System.out.print("\t");
             }
             System.out.println("comment.getCommentId() = " + comment.getCommentId());
         }
 
-        CommentResponse last = responses1.get(responses1.size() - 1);
+        CommentResponseDto last = responses1.get(responses1.size() - 1);
         Long lastParentCommentId = last.getParentCommentId();
         Long lastCommentId = last.getCommentId();
 
-        List<CommentResponse> responses2 = restClient.get()
+        List<CommentResponseDto> responses2 = restClient.get()
                 .uri("/v1/comments/infinite-scroll?articleId=1&pageSize=5&lastParentCommentId=%s&lastCommentId=%s"
                         .formatted(lastParentCommentId, lastCommentId))
                 .retrieve()
-                .body(new ParameterizedTypeReference<List<CommentResponse>>() {
+                .body(new ParameterizedTypeReference<List<CommentResponseDto>>() {
                 });
 
         System.out.println("secondPage");
-        for (CommentResponse comment : responses2) {
+        for (CommentResponseDto comment : responses2) {
             if (!comment.getCommentId().equals(comment.getParentCommentId())) {
                 System.out.print("\t");
             }

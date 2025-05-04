@@ -1,6 +1,6 @@
 package com.example.honbabspring.entity;
 
-import com.example.honbabspring.type.Role;
+import com.example.honbabspring.user.type.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,9 +1,8 @@
 package com.example.honbabspring.Comment.Service;
 
 import com.example.honbabspring.entity.Comment;
-import com.example.honbabspring.repository.CommentRepository;
-import com.example.honbabspring.service.CommentService;
-import lombok.experimental.ExtensionMethod;
+import com.example.honbabspring.comment.repository.CommentRepository;
+import com.example.honbabspring.comment.service.CommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
