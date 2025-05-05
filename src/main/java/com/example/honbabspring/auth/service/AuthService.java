@@ -36,6 +36,10 @@ public class AuthService {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
 
+        if(!signRequest.getPassword().equals(signRequest.getConfirmPassword())) {
+            throw new RuntimeException("비밀번호와 확인번호가 일치하지 않습니다");
+        }
+
         User user = signRequest.toEntity(passwordEncoder.encode(signRequest.getPassword()));
         return UserResponseDto.of(userRepository.save(user));
     }

@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +32,8 @@ public class AuthController {
             description = "회원 가입하는 API"
     )
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@Valid SignRequestDto joinRequestDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            String errorMessage = Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage();
-            return ResponseEntity.badRequest().body(new UserResponseDto(null, errorMessage));
-        }
-        return ResponseEntity.ok(authService.signup(joinRequestDto));
+    public ResponseEntity<UserResponseDto> signup(@Valid @Validated  @RequestBody SignRequestDto signRequestDto) {
+        return ResponseEntity.ok(authService.signup(signRequestDto));
     }
 
     @Operation(
