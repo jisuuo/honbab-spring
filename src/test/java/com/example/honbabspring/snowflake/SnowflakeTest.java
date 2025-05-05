@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import com.example.honbabspring.common.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
+import com.example.honbabspring.global.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

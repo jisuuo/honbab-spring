@@ -1,6 +1,6 @@
 package com.example.honbabspring.Comment.data;
 
-import com.example.honbabspring.common.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
+import com.example.honbabspring.global.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
 import com.example.honbabspring.comment.entity.CommentPath;
 import com.example.honbabspring.comment.entity.CommentV2;
 import jakarta.persistence.EntityManager;
@@ -49,8 +49,6 @@ public class DataInitializerV2 {
                 CommentV2 comment = CommentV2.create(
                         snowflake.nextId(),
                         "content",
-                        1L,
-                        1L,
                         toPath(i)
                 );
                 entityManager.persist(comment);

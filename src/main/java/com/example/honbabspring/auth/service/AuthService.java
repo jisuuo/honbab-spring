@@ -1,6 +1,10 @@
 package com.example.honbabspring.auth.service;
 
 import com.example.honbabspring.auth.dto.*;
+import com.example.honbabspring.auth.dto.request.LoginRequestDto;
+import com.example.honbabspring.auth.dto.request.SignRequestDto;
+import com.example.honbabspring.auth.dto.request.TokenRequestDto;
+import com.example.honbabspring.auth.dto.response.UserResponseDto;
 import com.example.honbabspring.user.entity.User;
 import com.example.honbabspring.auth.jwt.TokenProvider;
 import com.example.honbabspring.auth.repository.AuthRepository;
@@ -27,12 +31,12 @@ public class AuthService {
     String refreshToken;
 
     @Transactional
-    public UserResponseDto signup(SignRequestDto joinRequestDto) {
-        if (userRepository.existsByUserId(joinRequestDto.getUserId())) {
+    public UserResponseDto signup(SignRequestDto signRequest) {
+        if (userRepository.existsByUserId(signRequest.getUserId())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
 
-        User user = joinRequestDto.toEntity(passwordEncoder.encode(joinRequestDto.getPassword()));
+        User user = signRequest.toEntity(passwordEncoder.encode(signRequest.getPassword()));
         return UserResponseDto.of(userRepository.save(user));
     }
 

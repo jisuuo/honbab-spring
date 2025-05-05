@@ -1,6 +1,6 @@
 package com.example.honbabspring.service;
 
-import com.example.honbabspring.common.util.PageLimitCalculator;
+import com.example.honbabspring.global.util.PageLimitCalculator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

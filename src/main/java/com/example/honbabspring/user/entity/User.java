@@ -1,6 +1,6 @@
 package com.example.honbabspring.user.entity;
 
-import com.example.honbabspring.common.entity.BaseTime;
+import com.example.honbabspring.global.entity.BaseTime;
 import com.example.honbabspring.user.type.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,9 +13,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Table(name = "user")
 public class User extends BaseTime {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String userId;
 
     private String username;
@@ -40,4 +42,5 @@ public class User extends BaseTime {
         this.password = password;
         this.role = role;
     }
+
 }

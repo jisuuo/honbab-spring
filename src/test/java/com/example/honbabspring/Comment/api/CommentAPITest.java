@@ -1,7 +1,7 @@
 package com.example.honbabspring.Comment.api;
 
-import com.example.honbabspring.comment.dto.CommentPageResponseDto;
-import com.example.honbabspring.comment.dto.CommentResponseDto;
+import com.example.honbabspring.comment.dto.response.CommentPageResponseDto;
+import com.example.honbabspring.comment.dto.response.CommentResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ public class CommentAPITest {
     @Test
     void readAll() {
         CommentPageResponseDto response = restClient.get()
-                .uri("/v1/comments?articleId=1&page=1&pageSize=10")
+                .uri("/v1/comments?postId=1&page=1&pageSize=10")
                 .retrieve()
                 .body(CommentPageResponseDto.class);
 
@@ -90,7 +90,7 @@ public class CommentAPITest {
     @Test
     void readAllInfiniteScroll() {
         List<CommentResponseDto> responses1 = restClient.get()
-                .uri("/v1/comments/infinite-scroll?articleId=1&pageSize=5")
+                .uri("/v1/comments/infinite-scroll?postId=1&pageSize=5")
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<CommentResponseDto>>() {
                 });
@@ -108,7 +108,7 @@ public class CommentAPITest {
         Long lastCommentId = last.getCommentId();
 
         List<CommentResponseDto> responses2 = restClient.get()
-                .uri("/v1/comments/infinite-scroll?articleId=1&pageSize=5&lastParentCommentId=%s&lastCommentId=%s"
+                .uri("/v1/comments/infinite-scroll?postId=1&pageSize=5&lastParentCommentId=%s&lastCommentId=%s"
                         .formatted(lastParentCommentId, lastCommentId))
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<CommentResponseDto>>() {
@@ -127,7 +127,7 @@ public class CommentAPITest {
     @Getter
     @AllArgsConstructor
     public static class CommentCreateRequest {
-        private Long articleId;
+        private Long postId;
         private String content;
         private Long parentCommentId;
         private Long writerId;

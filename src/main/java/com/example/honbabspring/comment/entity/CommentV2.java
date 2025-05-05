@@ -1,9 +1,8 @@
 package com.example.honbabspring.comment.entity;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.honbabspring.post.entity.Post;
+import com.example.honbabspring.user.entity.User;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,19 +19,37 @@ public class CommentV2 {
     @Id
     private Long commentId;
     private String content;
-    private Long articleId;
-    private Long writerId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private User author;
+
     @Embedded
     private CommentPath commentPath;
     private Boolean deleted;
     private LocalDateTime createdAt;
 
-    public static CommentV2 create(Long commentId, String content, Long articleId, Long writerId, CommentPath commentPath) {
+    public static CommentV2 create(Long commentId, String content, Post post, User user, CommentPath commentPath) {
         CommentV2 comment = new CommentV2();
         comment.commentId = commentId;
         comment.content = content;
-        comment.articleId = articleId;
-        comment.writerId = writerId;
+        comment.post = post;
+        comment.author = user;
+        comment.commentPath = commentPath;
+        comment.deleted = false;
+        comment.createdAt = LocalDateTime.now();
+        return comment;
+    }
+
+
+    public static CommentV2 create(Long commentId, String content, CommentPath commentPath) {
+        CommentV2 comment = new CommentV2();
+        comment.commentId = commentId;
+        comment.content = content;
         comment.commentPath = commentPath;
         comment.deleted = false;
         comment.createdAt = LocalDateTime.now();

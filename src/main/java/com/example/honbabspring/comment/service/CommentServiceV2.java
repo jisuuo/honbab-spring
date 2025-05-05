@@ -1,13 +1,18 @@
 package com.example.honbabspring.comment.service;
 
-import com.example.honbabspring.common.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
-import com.example.honbabspring.comment.dto.CommentCreateRequestV2;
-import com.example.honbabspring.comment.dto.CommentPageResponseDto;
-import com.example.honbabspring.comment.dto.CommentResponseDto;
+import com.example.honbabspring.global.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
+import com.example.honbabspring.comment.dto.request.CommentCreateRequestV2;
+import com.example.honbabspring.comment.dto.response.CommentPageResponseDto;
+import com.example.honbabspring.comment.dto.response.CommentResponseDto;
 import com.example.honbabspring.comment.entity.CommentPath;
 import com.example.honbabspring.comment.entity.CommentV2;
 import com.example.honbabspring.comment.repository.CommentRepositoryV2;
-import com.example.honbabspring.common.util.PageLimitCalculator;
+import com.example.honbabspring.global.util.PageLimitCalculator;
+import com.example.honbabspring.post.entity.Post;
+import com.example.honbabspring.post.repository.PostRepository;
+import com.example.honbabspring.user.entity.User;
+import com.example.honbabspring.user.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,19 +26,27 @@ import static java.util.function.Predicate.not;
 public class CommentServiceV2 {
     private final Snowflake snowflake = new Snowflake();
     private final CommentRepositoryV2 commentRepository;
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public CommentResponseDto create(CommentCreateRequestV2 request) {
+        Post post = postRepository.findById(request.getPostId())
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+
+        User writer = userRepository.findById(request.getWriterId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
         CommentV2 parent = findParent(request);
         CommentPath parentCommentPath = parent == null ? CommentPath.create("") : parent.getCommentPath();
         CommentV2 comment = commentRepository.save(
                 CommentV2.create(
                         snowflake.nextId(),
                         request.getContent(),
-                        request.getArticleId(),
-                        request.getWriterId(),
+                        post,
+                        writer,
                         parentCommentPath.createChildCommentPath(
-                                commentRepository.findDescendantsTopPath(request.getArticleId(), parentCommentPath.getPath())
+                                commentRepository.findDescendantsTopPath(request.getPostId(), parentCommentPath.getPath())
                                         .orElse(null)
                         )
                 )
@@ -67,7 +80,7 @@ public class CommentServiceV2 {
 
     private boolean hasChildren(CommentV2 comment) {
         return commentRepository.findDescendantsTopPath(
-                comment.getArticleId(),
+                comment.getPost().getPostId(),
                 comment.getCommentPath().getPath()
         ).isPresent();
     }
@@ -88,19 +101,19 @@ public class CommentServiceV2 {
         );
     }
 
-    public CommentPageResponseDto readAll(Long articleId, Long page, Long pageSize) {
+    public CommentPageResponseDto readAll(Long postId, Long page, Long pageSize) {
         return CommentPageResponseDto.of(
-                commentRepository.findAll(articleId, (page - 1) * pageSize, pageSize).stream()
+                commentRepository.findAll(postId, (page - 1) * pageSize, pageSize).stream()
                         .map(CommentResponseDto::from)
                         .toList(),
-                commentRepository.count(articleId, PageLimitCalculator.calculatePageLimit(page, pageSize, 10L))
+                commentRepository.count(postId, PageLimitCalculator.calculatePageLimit(page, pageSize, 10L))
         );
     }
 
-    public List<CommentResponseDto> readAllInfiniteScroll(Long articleId, String lastPath, Long pageSize) {
+    public List<CommentResponseDto> readAllInfiniteScroll(Long postId, String lastPath, Long pageSize) {
         List<CommentV2> comments = lastPath == null ?
-                commentRepository.findAllInfiniteScroll(articleId, pageSize) :
-                commentRepository.findAllInfiniteScroll(articleId, lastPath, pageSize);
+                commentRepository.findAllInfiniteScroll(postId, pageSize) :
+                commentRepository.findAllInfiniteScroll(postId, lastPath, pageSize);
 
         return comments.stream()
                 .map(CommentResponseDto::from)

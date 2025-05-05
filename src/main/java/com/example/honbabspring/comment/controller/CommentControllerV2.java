@@ -1,8 +1,8 @@
 package com.example.honbabspring.comment.controller;
 
-import com.example.honbabspring.comment.dto.CommentCreateRequestV2;
-import com.example.honbabspring.comment.dto.CommentPageResponseDto;
-import com.example.honbabspring.comment.dto.CommentResponseDto;
+import com.example.honbabspring.comment.dto.request.CommentCreateRequestV2;
+import com.example.honbabspring.comment.dto.response.CommentPageResponseDto;
+import com.example.honbabspring.comment.dto.response.CommentResponseDto;
 import com.example.honbabspring.comment.service.CommentServiceV2;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -52,11 +52,11 @@ public class CommentControllerV2 {
     )
     @GetMapping
     public CommentPageResponseDto readAll(
-            @RequestParam("articleId") Long articleId,
+            @RequestParam("postId") Long postId,
             @RequestParam("page") Long page,
             @RequestParam("pageSize") Long pageSize
     ) {
-        return commentService.readAll(articleId, page, pageSize);
+        return commentService.readAll(postId, page, pageSize);
     }
 
     @Operation(
@@ -65,18 +65,18 @@ public class CommentControllerV2 {
     )
     @GetMapping("/infinite-scroll")
     public List<CommentResponseDto> readAllInfiniteScroll(
-            @RequestParam("articleId") Long articleId,
+            @RequestParam("postId") Long postId,
             @RequestParam(value = "lastPath", required = false) String lastPath,
             @RequestParam("pageSize") Long pageSize
     ) {
-        return commentService.readAllInfiniteScroll(articleId, lastPath, pageSize);
+        return commentService.readAllInfiniteScroll(postId, lastPath, pageSize);
     }
 
-//    @GetMapping("/v2/comments/articles/{articleId}/count")
+//    @GetMapping("/v2/comments/posts/{postId}/count")
 //    public Long count(
-//            @PathVariable("articleId") Long articleId
+//            @PathVariable("postId") Long postId
 //    ) {
-//        return commentService.count(articleId);
+//        return commentService.count(postId);
 //    }
 
 }
