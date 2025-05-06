@@ -1,4 +1,4 @@
-package com.example.honbabspring.Comment.api;
+package com.example.honbabspring.comment.api;
 
 import com.example.honbabspring.comment.dto.response.CommentPageResponseDto;
 import com.example.honbabspring.comment.dto.response.CommentResponseDto;

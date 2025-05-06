@@ -1,8 +1,7 @@
-package com.example.honbabspring.Comment.data;
+package com.example.honbabspring.post.data;
 
 import com.example.honbabspring.global.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
-import com.example.honbabspring.comment.entity.CommentPath;
-import com.example.honbabspring.comment.entity.CommentV2;
+import com.example.honbabspring.post.entity.Post;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;
@@ -15,9 +14,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @SpringBootTest
-public class DataInitializerV2 {
+public class DataInitializer {
+
     @PersistenceContext
     EntityManager entityManager;
+
     @Autowired
     TransactionTemplate transactionTemplate;
     Snowflake snowflake = new Snowflake();
@@ -26,15 +27,12 @@ public class DataInitializerV2 {
     static final int BULK_INSERT_SIZE = 2000;
     static final int EXECUTE_COUNT = 6000;
 
-
     @Test
     void initialize() throws InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
-        for(int i = 0; i < EXECUTE_COUNT; i++) {
-            int start = i * BULK_INSERT_SIZE;
-            int end = (i + 1) * BULK_INSERT_SIZE;
+        for (int i = 0; i < EXECUTE_COUNT; i++) {
             executorService.submit(() -> {
-                insert(start, end);
+                insert();
                 latch.countDown();
                 System.out.println("latch.getCount() = " + latch.getCount());
             });
@@ -43,29 +41,17 @@ public class DataInitializerV2 {
         executorService.shutdown();
     }
 
-    void insert(int start, int end) {
+    void insert() {
         transactionTemplate.executeWithoutResult(status -> {
-            for(int i = start; i < end; i++) {
-                CommentV2 comment = CommentV2.create(
+            for (int i = 0; i < BULK_INSERT_SIZE; i++) {
+                Post post = Post.create(
                         snowflake.nextId(),
-                        "content",
-                        toPath(i)
+                        "title" + i,
+                        "content" + i,
+                        1L
                 );
-                entityManager.persist(comment);
+                entityManager.persist(post);
             }
         });
-    }
-
-    private static final String CHARSET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-    private static final int DEPTH_CHUNK_SIZE = 5;
-
-    CommentPath toPath(int value) {
-        String path = "";
-        for (int i=0; i < DEPTH_CHUNK_SIZE; i++) {
-            path = CHARSET.charAt(value % CHARSET.length()) + path;
-            value /= CHARSET.length();
-        }
-        return CommentPath.create(path);
     }
 }

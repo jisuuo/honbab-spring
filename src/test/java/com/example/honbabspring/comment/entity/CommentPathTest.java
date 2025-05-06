@@ -1,6 +1,5 @@
-package com.example.honbabspring.Comment.entity;
+package com.example.honbabspring.comment.entity;
 
-import com.example.honbabspring.comment.entity.CommentPath;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

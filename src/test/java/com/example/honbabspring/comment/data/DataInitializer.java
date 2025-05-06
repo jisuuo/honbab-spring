@@ -1,7 +1,7 @@
-package com.example.honbabspring.Post.data;
+package com.example.honbabspring.comment.data;
 
 import com.example.honbabspring.global.snowflake.src.main.java.kuke.board.common.snowflake.Snowflake;
-import com.example.honbabspring.post.entity.Post;
+import com.example.honbabspring.comment.entity.Comment;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;
@@ -43,14 +43,11 @@ public class DataInitializer {
 
     void insert() {
         transactionTemplate.executeWithoutResult(status -> {
+            Comment prev = null;
             for (int i = 0; i < BULK_INSERT_SIZE; i++) {
-                Post post = Post.create(
-                        snowflake.nextId(),
-                        "title" + i,
-                        "content" + i,
-                        1L
-                );
-                entityManager.persist(post);
+                Comment comment = Comment.create(snowflake.nextId(), "content", i % 2 == 0 ? null : prev.getCommentId());
+                prev = comment;
+                entityManager.persist(comment);
             }
         });
     }

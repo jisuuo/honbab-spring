@@ -1,4 +1,4 @@
-package com.example.honbabspring.Post.api;
+package com.example.honbabspring.post.api;
 
 import com.example.honbabspring.post.dto.response.PostPageResponseDto;
 import com.example.honbabspring.post.dto.response.PostResponseDto;
