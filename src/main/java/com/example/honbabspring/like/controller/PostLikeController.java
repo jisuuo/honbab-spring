@@ -19,20 +19,62 @@ public class PostLikeController {
         return postLikeService.read(postId, userId);
     }
 
-    @PostMapping("/post/{postId}/users/{userId}")
-    public void like(
+    @GetMapping("/post/{postId}/count")
+    public Long count(
+            @PathVariable Long postId
+    ) {
+        return postLikeService.count(postId);
+    }
+
+    @PostMapping("/post/{postId}/users/{userId}/pessimistic-lock-1")
+    public void likePessimisticLock1(
             @PathVariable Long postId,
             @PathVariable Long userId
     ) {
-        postLikeService.like(postId, userId);
+        postLikeService.likePessimisticLock1(postId, userId);
     }
 
 
-    @DeleteMapping("/post/{postId}/users/{userId}")
-    public void unlike(
+    @DeleteMapping("/post/{postId}/users/{userId}/pessimistic-lock-1")
+    public void unlikePessimisticLock1(
             @PathVariable Long postId,
             @PathVariable Long userId
     ) {
-        postLikeService.unlike(postId, userId);
+        postLikeService.unlikePessimisticLock1(postId, userId);
+    }
+
+
+    @PostMapping("/post/{postId}/users/{userId}/pessimistic-lock-2")
+    public void likePessimisticLock2(
+            @PathVariable Long postId,
+            @PathVariable Long userId
+    ) {
+        postLikeService.likePessimisticLock2(postId, userId);
+    }
+
+
+    @DeleteMapping("/post/{postId}/users/{userId}/pessimistic-lock-2")
+    public void unlikePessimisticLock2(
+            @PathVariable Long postId,
+            @PathVariable Long userId
+    ) {
+        postLikeService.unlikePessimisticLock2(postId, userId);
+    }
+
+    @PostMapping("/post/{postId}/users/{userId}/optimistic-lock")
+    public void likeOptimisticLock(
+            @PathVariable Long postId,
+            @PathVariable Long userId
+    ) {
+        postLikeService.likeOptimisticLock(postId, userId);
+    }
+
+
+    @DeleteMapping("/post/{postId}/users/{userId}/optimistic-lock")
+    public void unlikeOptimisticLock(
+            @PathVariable Long postId,
+            @PathVariable Long userId
+    ) {
+        postLikeService.unlikeOptimisticLock(postId, userId);
     }
 }
