@@ -11,12 +11,12 @@ import org.springframework.web.client.RestClient;
 import java.util.List;
 
 public class PostAPITest {
-    RestClient restClient = RestClient.create("http://localhost:8080");
+    RestClient restClient = RestClient.create("http://localhost:8080/dev");
 
     @Test
     void createTest() {
         PostResponseDto response = create(new PostCreateRequestDto(
-                "hi", "my content", 1L, 1L
+                "hi", "my content", "jisu229", 1L
         ));
         System.out.println("response = " + response);
     }
@@ -101,13 +101,37 @@ public class PostAPITest {
 
     }
 
+    @Test
+    void countTest() {
+        PostResponseDto response = create(new PostCreateRequestDto("hi", "my content", "jisu229", 2L));
+
+        Long count1 = restClient.get()
+                .uri("/v1/posts/boards/{boardId}/count")
+                .retrieve()
+                .body(Long.class);
+
+        System.out.println("count1 = " + count1);
+
+        restClient.delete()
+                .uri("/v1/posts/{postId}", response.getPostId())
+                .retrieve()
+                .body(PostResponseDto.class);
+
+        Long count2 = restClient.get()
+                .uri("/v1/posts//boards/{boardId}/count")
+                .retrieve()
+                .body(Long.class);
+
+        System.out.println("count2 = " + count2);
+    }
+
 
     @Getter
     @AllArgsConstructor
     static class PostCreateRequestDto {
         private String title;
         private String content;
-        private Long writerId;
+        private String writerId;
         private Long boardId;
     }
 

@@ -5,7 +5,9 @@ import com.example.honbabspring.post.dto.request.PostCreateRequestDto;
 import com.example.honbabspring.post.dto.response.PostPageResponseDto;
 import com.example.honbabspring.post.dto.response.PostResponseDto;
 import com.example.honbabspring.post.dto.request.PostUpdateRequestDto;
+import com.example.honbabspring.post.entity.BoardPostCount;
 import com.example.honbabspring.post.entity.Post;
+import com.example.honbabspring.post.repository.BoardPostCountRepository;
 import com.example.honbabspring.post.repository.PostRepository;
 import com.example.honbabspring.global.util.PageLimitCalculator;
 import com.example.honbabspring.user.entity.User;
@@ -23,6 +25,7 @@ public class PostService {
     private final Snowflake snowflake = new Snowflake();
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final BoardPostCountRepository boardPostCountRepository;
 
     @Transactional
     public PostResponseDto create(PostCreateRequestDto request) {
@@ -31,6 +34,11 @@ public class PostService {
         Post post = postRepository.save(
                 Post.create(snowflake.nextId(), request.getTitle(), request.getContent(), request.getBoardId(), user, request.isPublicStatus(), request.isReplyStatus())
         );
+
+        int result = boardPostCountRepository.increase(request.getBoardId());
+        if(result == 0) {
+            boardPostCountRepository.save(BoardPostCount.init(request.getBoardId(), 1L));
+        }
 
         return PostResponseDto.from(post);
     }
@@ -50,6 +58,7 @@ public class PostService {
     public void delete(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow();
         post.updateDeleteStatus(true);
+        boardPostCountRepository.decrease(post.getBoardId());
     }
 
     public PostPageResponseDto readAll(Long boardId, Long page, Long pageSize) {
@@ -65,5 +74,11 @@ public class PostService {
                 postRepository.findAllInfiniteScroll(boardId, pageSize, lastPostId);
 
         return posts.stream().map(PostResponseDto::from).toList();
+    }
+
+    public Long count(Long boardId) {
+        return boardPostCountRepository.findById(boardId)
+                .map(BoardPostCount::getPostCount)
+                .orElse(0L);
     }
 }

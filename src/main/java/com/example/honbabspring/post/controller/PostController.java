@@ -23,6 +23,7 @@ public class PostController {
             summary = "게시글 단건 조회",
             description = "게시글 ID를 기반으로 게시글 정보를 조회"
     )
+
     @GetMapping("/{postId}")
      public PostResponseDto read(@PathVariable Long postId) {
         return postService.read(postId);
@@ -75,6 +76,11 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public void delete(@PathVariable Long postId) {
         postService.delete(postId);
+    }
+
+    @GetMapping("/boards/{boardId}/count")
+    public Long count(@PathVariable Long boardId) {
+        return postService.count(boardId);
     }
 
 }

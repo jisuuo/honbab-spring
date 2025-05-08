@@ -5,11 +5,13 @@ import com.example.honbabspring.user.type.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
+import lombok.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignRequestDto {
 
     @NotBlank(message = "해당 값은 필수 입력값입니다.")
@@ -21,30 +23,30 @@ public class SignRequestDto {
     @Size(min = 2, max = 10, message = "이름은 2~10자리까지 가능합니다.")
     @Pattern(regexp = "^[가-힣a-zA-Z]+$", message = "이름은 한글 또는 영문만 가능합니다.")
     @Schema(example = "최혼밥")
-    private final String username;
+    private String username;
 
     @NotBlank(message = "해당 값은 필수 입력값입니다.")
     @Size(min = 10, max = 50, message = "비밀번호는 10~50자리까지 가능합니다.")
     @Schema(example = "Password123!")
-    private final String password;
+    private String password;
 
     @NotBlank(message = "해당 값은 필수 입력값입니다.")
     @Size(min = 10, max = 50, message = "비밀번호 확인은 10~50자리까지 가능합니다.")
     @Schema(example = "Password123!")
-    private final String confirmPassword;
+    private String confirmPassword;
 
     @NotBlank(message = "해당 값은 필수 입력값입니다.")
     @Pattern(regexp = "^(010-?\\d{4}-?\\d{4})$", message = "휴대폰 번호는 010-1234-5678 또는 01012345678 형식이어야 합니다.")
     @Schema(example = "010-1234-5678")
-    private final String phone;
+    private String phone;
 
     @NotBlank(message = "해당 값은 필수 입력값입니다.")
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "이메일 형식에 맞지 않습니다.")
     @Schema(example = "john@example.com")
-    private final String email;
+    private String email;
 
     @Schema(example = "USER")
-    private final String role;
+    private String role;
 
     public SignRequestDto(String userId, String username, String password, String confirmPassword, String phone, String email, String role) {
         this.userId = userId;
